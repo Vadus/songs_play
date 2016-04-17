@@ -1,0 +1,10 @@
+@import service.UserProvider
+@(userProvider: UserProvider, localUser: models.User = null)
+
+@main(userProvider, Messages("songs.navigation.restricted"), "restricted") {
+    
+    <h1>@Messages("songs.restricted.header")</h1>
+    <p>
+        @Messages("songs.restricted.secrets")
+    </p>
+}

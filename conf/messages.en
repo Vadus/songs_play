@@ -1,0 +1,152 @@
+# Override default Play's validation messages
+
+# --- Constraints
+constraint.required=Required
+constraint.min=Minimum value: {0}
+constraint.max=Maximum value: {0}
+constraint.minLength=Minimum length: {0}
+constraint.maxLength=Maximum length: {0}
+constraint.email=Email
+
+# --- Formats
+format.date=Date (''{0}'')
+format.numeric=Numeric
+format.real=Real
+
+# --- Errors
+error.invalid=Invalid value
+error.required=This field is required
+error.number=Numeric value expected
+error.real=Real number value expected
+error.min=Must be greater or equal to {0}
+error.max=Must be less or equal to {0}
+error.minLength=Minimum length is {0}
+error.maxLength=Maximum length is {0}
+error.email=Valid email required
+error.pattern=Must satisfy {0}
+
+### --- songs START
+
+# songs: Initial translations
+
+songs.accounts.link.success=Account linked successfully
+songs.accounts.merge.success=Accounts merged successfully
+
+songs.verify_email.error.already_validated=Your e-mail has already been validated.
+songs.verify_email.error.set_email_first=You need to set an e-mail address first.
+songs.verify_email.message.instructions_sent=Instructions on how to verify your e-mail address have been sent to {0}.
+songs.verify_email.success=E-mail address ({0}) successfully verified.
+
+songs.reset_password.message.instructions_sent=Instructions on how to reset your password have been sent to {0}.
+songs.reset_password.message.email_not_verified=Your account has not been verified, yet. An e-mail including instructions on how to verify it has been sent out. Retry resetting your password afterwards.
+songs.reset_password.message.no_password_account=Your user has not yet been set up for password usage.
+songs.reset_password.message.success.auto_login=Your password has been reset.
+songs.reset_password.message.success.manual_login=Your password has been reset. Please now log in using your new password.
+
+songs.change_password.error.passwords_not_same=Passwords do not match.
+songs.change_password.success=Password has been changed successfully.
+
+songs.password.signup.error.passwords_not_same=Passwords do not match.
+songs.password.login.unknown_user_or_pw=Unknown user or password.
+
+songs.password.verify_signup.subject=PlayAuthenticate: Complete your signup
+songs.password.verify_email.subject=PlayAuthenticate: Confirm your e-mail address
+songs.password.reset_email.subject=PlayAuthenticate: How to reset your password
+
+# songs: Additional translations
+
+songs.login.email.placeholder=Your e-mail address
+songs.login.password.placeholder=Choose a password
+songs.login.password.repeat=Repeat chosen password
+songs.login.title=Login
+songs.login.password.placeholder=Password
+songs.login.now=Login now
+songs.login.forgot.password=Forgot your password?
+songs.login.oauth=or log in using one of the following providers:
+songs.login.basic=or try HTTP basic auth (as example/secret)
+
+songs.signup.title=Signup
+songs.signup.name=Your name
+songs.signup.now=Sign up now
+songs.signup.oauth=or sign up using one of the following providers:
+
+songs.verify.account.title=E-mail verification required
+songs.verify.account.before=Before setting a password, you need to
+songs.verify.account.first=first verify your e-mail address
+
+songs.change.password.title=Change your password here
+songs.change.password.cta=Change my password
+
+songs.merge.accounts.title=Merge accounts
+songs.merge.accounts.question=Do you want to merge your current account ({0}) with this account: {1}?
+songs.merge.accounts.true=Yes, merge these two accounts
+songs.merge.accounts.false=No, exit my current session and log in as a new user
+songs.merge.accounts.ok=OK
+
+songs.link.account.title=Link account
+songs.link.account.question=Link ({0}) with your user?
+songs.link.account.true=Yes, link this account
+songs.link.account.false=No, log out and create a new user with this account
+songs.link.account.ok=OK
+
+# songs: Signup folder translations
+
+songs.verify.email.title=Verify your e-mail
+songs.verify.email.requirement=Before you can use PlayAuthenticate, you first need to verify your e-mail address.
+songs.verify.email.cta=An e-mail has been sent to the registered address. Please follow the embedded link to activate your account.
+
+songs.password.reset.title=Reset password
+songs.password.reset.cta=Reset my password
+
+songs.password.forgot.title=Forgot password
+songs.password.forgot.cta=Send reset instructions
+
+songs.oauth.access.denied.title=OAuth access denied
+songs.oauth.access.denied.explanation=If you want to use PlayAuthenticate with OAuth, you must accept the connection.
+songs.oauth.access.denied.alternative=If you rather not like to do this, you can also
+songs.oauth.access.denied.alternative.cta=sign up with a username and password instead
+
+songs.token.error.title=Token error
+songs.token.error.message=The given token has either expired or does not exist.
+
+songs.user.exists.title=User exists
+songs.user.exists.message=This user already exists.
+
+# songs: Navigation
+songs.navigation.profile=Profile
+songs.navigation.link_more=Link more providers
+songs.navigation.logout=Sign out
+songs.navigation.login=Log in
+songs.navigation.home=Home
+songs.navigation.restricted=User page
+songs.navigation.admin=Admin page
+songs.navigation.signup=Sign up
+
+# songs: Handler
+songs.handler.loginfirst=You need to log in first, to view ''{0}''
+
+# songs: Profile
+songs.profile.title=User profile
+songs.profile.mail=Your name is {0} and your email address is {1}!
+songs.profile.unverified=unverified - click to verify
+songs.profile.verified=verified
+songs.profile.providers_many=There are {0} providers linked with your account:
+songs.profile.providers_one = There is one provider linked with your account:
+songs.profile.logged=You are currently logged in with:
+songs.profile.session=Your user ID is {0} and your session will expire on {1}
+songs.profile.session_endless=Your user ID is {0} and your session will not expire, as it is endless
+songs.profile.password_change=Change/set a password for your account
+
+# songs - sample: Restricted page
+songs.restricted.header=User page
+songs.restricted.secrets=Secrets, everywhere!
+
+# songs - sample: Admin page
+songs.admin.header=Welcome dear Administrator!
+
+### --- songs END
+
+# Index page
+songs.index.title=Songs!
+songs.index.heading=Header
+songs.index.details=More...
