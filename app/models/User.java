@@ -62,7 +62,7 @@ public class User extends AppModel implements Subject {
 	@ManyToMany
 	public List<UserPermission> permissions;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL)
 	public List<Playlist> playlists;
 
 	public static final AppModel.Finder<Long, User> find = new AppModel.Finder<Long, User>(
@@ -229,8 +229,22 @@ public class User extends AppModel implements Subject {
 		return find.where().eq("active", true).eq("email", email);
 	}
 
+	public static User findByName(final String username){
+		return getNameUserFind(username).findUnique();
+	}
+
+	private static ExpressionList<User> getNameUserFind(final String username){
+		return find.where().eq("active", true).eq("name", username);
+	}
+
 	public LinkedAccount getAccountByProvider(final String providerKey) {
-		return LinkedAccount.findByProviderKey(this, providerKey);
+        for (LinkedAccount la : linkedAccounts){
+            if(la.providerKey.equals(providerKey)){
+                return la;
+            }
+        }
+        return null;
+		//return LinkedAccount.findByProviderKey(this, providerKey);
 	}
 
 	public static void verify(final User unverified) {
@@ -246,7 +260,7 @@ public class User extends AppModel implements Subject {
 		if (a == null) {
 			if (create) {
 				a = LinkedAccount.create(authUser);
-				a.user = this;
+				//a.user = this;
 			} else {
 				throw new RuntimeException(
 						"Account not enabled for password usage");

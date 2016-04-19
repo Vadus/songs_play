@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /admin                 controllers.Application.admin
+GET     /admin                      controllers.Application.admin
 GET     /restricted                 controllers.Application.restricted
 GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
@@ -28,8 +28,8 @@ GET     /accounts/exists            controllers.Signup.exists
 GET     /accounts/password/reset/:token     controllers.Signup.resetPassword(token: String)
 POST    /accounts/password/reset            controllers.Signup.doResetPassword
 
-GET    /accounts/password/change    controllers.Account.changePassword
-POST   /accounts/password/change    controllers.Account.doChangePassword
+GET     /accounts/password/change    controllers.Account.changePassword
+POST    /accounts/password/change    controllers.Account.doChangePassword
 
 GET     /accounts/verify            controllers.Account.verifyEmail
 
@@ -46,3 +46,7 @@ POST    /login/password/forgot     controllers.Signup.doForgotPassword
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /lists                       controllers.Playlists.myList
+
+GET     /lists/:username             controllers.Playlists.list(username: String)

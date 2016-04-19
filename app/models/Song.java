@@ -25,6 +25,6 @@ public class Song extends AppModel{
 
     public String link;
 
-    @ManyToMany(mappedBy = "songs")
-    public List<Playlist> playlists;
+    //@ManyToMany(mappedBy = "songs")
+    //public List<Playlist> playlists;
 }

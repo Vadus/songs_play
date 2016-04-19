@@ -1,4 +1,7 @@
 @import service.UserProvider
+
+@import be.objectify.deadbolt.java.views.html._
+
 @(userProvider: UserProvider)
 
 @main(userProvider, Messages("songs.index.title")) {
@@ -7,4 +10,11 @@
       <div class="row">
           @Messages("songs.index.title")
       </div>
+        @subjectPresentOr() {
+            @defining(userProvider.getUser(session())) { user =>
+                logged in as @user.name
+            }
+        } {
+            not logged in
+        }
     }

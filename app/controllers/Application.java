@@ -3,6 +3,7 @@ package controllers;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import com.feth.play.module.pa.PlayAuthenticate;
+import models.Playlist;
 import models.User;
 import play.Routes;
 import play.data.Form;
@@ -16,7 +17,9 @@ import views.html.*;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Application extends Controller {
 
@@ -44,6 +47,7 @@ public class Application extends Controller {
 	}
 
 	public Result index() {
+		final User localUser = this.userProvider.getUser(session());
 		return ok(index.render(this.userProvider));
 	}
 

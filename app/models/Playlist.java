@@ -21,14 +21,15 @@ public class Playlist extends AppModel {
 
     public String name;
 
-    @ManyToOne
-    public User user;
+    //@ManyToOne
+    //public User user;
 
-    @ManyToMany
-    @JoinTable(
-            name="playlist_songs",
-            joinColumns = @JoinColumn(name="PLAYLIST_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "SONG_ID", referencedColumnName = "ID")
-    )
+//    @ManyToMany
+//    @JoinTable(
+//            name="playlist_songs",
+//            joinColumns = @JoinColumn(name="PLAYLIST_ID", referencedColumnName = "ID"),
+//            inverseJoinColumns = @JoinColumn(name = "SONG_ID", referencedColumnName = "ID")
+//    )
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Song> songs;
 }
