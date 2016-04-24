@@ -21,9 +21,13 @@ public class Song extends AppModel{
     @Column(name="ID")
     public Long id;
 
+    public int pos;
+
     public String title;
 
-    public String link;
+    public String url;
+
+    public String source;
 
     //@ManyToMany(mappedBy = "songs")
     //public List<Playlist> playlists;

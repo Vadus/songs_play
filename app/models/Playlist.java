@@ -32,4 +32,7 @@ public class Playlist extends AppModel {
 //    )
     @OneToMany(cascade = CascadeType.ALL)
     public List<Song> songs;
+
+    public static final AppModel.Finder<Long, Playlist> find = new AppModel.Finder<Long, Playlist>(
+            Long.class, Playlist.class);
 }

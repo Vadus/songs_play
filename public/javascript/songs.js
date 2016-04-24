@@ -112,8 +112,8 @@ Player.prototype.initYoutube = function(playerId){
     this.ytPlayerId = playerId;
     
     this.ytPlayer = new YT.Player(playerId, {
-      height: '390',
-      width: '640',
+      height: '150',
+      width: '300',
       videoId: 'M7lc1UVf-VE',
       events: {
         'onReady': onYtPlayerReady,
@@ -182,12 +182,28 @@ Player.prototype._stopVideoSc = function(){
 var _player;
 
 function initSonglist(songlist){
-    
-    // create song list 
+
+    // create song list
     var songlistUl = document.getElementById("songlist").getElementsByTagName("ul")[0];
     for(var i in songlist){
-    var song = songlist[i];
-    
+        var song = songlist[i];
+
+        var songLi = createSongLi(song);
+
+        songlistUl.appendChild(songLi);
+    }
+}
+
+function addSong(song){
+
+    _player.songlist.push(song);
+
+    var songlistUl = document.getElementById("songlist").getElementsByTagName("ul")[0];
+    var songLi = createSongLi(song);
+    songlistUl.appendChild(songLi);
+}
+
+function createSongLi(song){
     var songLi = document.createElement("li");
     var songDiv = document.createElement("div");
     songDiv.setAttribute("id", song.id);
@@ -206,7 +222,7 @@ function initSonglist(songlist){
     }
     imgStart.setAttribute("alt", song.url);
     imgStart.setAttribute("style", "width: 20px; height: 20px;");
-    
+
     var imgStop = document.createElement("img");
     if(song.source == "YT"){
       imgStop.setAttribute("id", "ytButtonStop_" + song.id);
@@ -220,7 +236,7 @@ function initSonglist(songlist){
     }
     imgStop.setAttribute("alt", song.url);
     imgStop.setAttribute("style", "width: 20px; height: 20px; display: none;");
-    
+
     var brTag = document.createElement("br");
     var songLink = document.createElement("a");
     songLink.setAttribute("href", song.url);
@@ -232,17 +248,16 @@ function initSonglist(songlist){
     <img id="ytButtonStop_1" class="ytButtonStop" src="http://songs.klarblick.org/static/yt_pause.svg" alt="https://www.youtube.com/v/KuAXv5qaSbQ" style="width: 20px; height: 20px; display: none"/>
     <br/><a href="https://www.youtube.com/watch?v=KuAXv5qaSbQ" target="_blank" >Source</a>
     */
-    
-    songDiv.appendChild(songSpan);
+
     songDiv.appendChild(imgStart);
     songDiv.appendChild(imgStop);
+    songDiv.appendChild(songSpan);
     songDiv.appendChild(brTag);
     songDiv.appendChild(songLink);
-    
+
     songLi.appendChild(songDiv);
-    
-    songlistUl.appendChild(songLi);
-    }
+
+    return songLi;
 }
 
 function playVideo(songId, videoUrl, videoSource){

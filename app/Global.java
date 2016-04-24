@@ -34,13 +34,17 @@ public class Global extends GlobalSettings {
             Logger.info("user 'admin@klarblick.org' created");
 
             Song song1 = new Song();
+            song1.pos = 1;
             song1.title = "Moderat - New Error";
-            song1.link = "https://www.youtube.com/v/1J9l3O1jmrg";
+            song1.url = "https://www.youtube.com/v/1J9l3O1jmrg";
+            song1.source = "YT";
             //song1.save();
 
             Song song2 = new Song();
+            song2.pos = 2;
             song2.title = "My Tribute Mixtape Series #13: Christian Löffler";
-            song2.link = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
+            song2.url = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
+            song2.source = "SC";
             //song2.save();
 
             Playlist playlist = new Playlist();

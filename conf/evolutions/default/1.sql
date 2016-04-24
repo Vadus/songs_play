@@ -30,8 +30,10 @@ create sequence security_role_seq;
 create table songs (
   id                            bigint not null,
   playlist_id                   bigint not null,
+  pos                           integer,
   title                         varchar(255),
-  link                          varchar(255),
+  url                           varchar(255),
+  source                        varchar(255),
   constraint pk_songs primary key (id)
 );
 create sequence songs_seq;
