@@ -1,5 +1,8 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,16 +24,17 @@ public class Playlist extends AppModel {
 
     public String name;
 
-    //@ManyToOne
-    //public User user;
+    @ManyToOne
+    @JsonBackReference
+    public User user;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name="playlist_songs",
-//            joinColumns = @JoinColumn(name="PLAYLIST_ID", referencedColumnName = "ID"),
-//            inverseJoinColumns = @JoinColumn(name = "SONG_ID", referencedColumnName = "ID")
-//    )
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name="playlist_songs",
+            joinColumns = @JoinColumn(name="PLAYLIST_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "SONG_ID", referencedColumnName = "ID")
+    )
+    @JsonManagedReference
     public List<Song> songs;
 
     public static final AppModel.Finder<Long, Playlist> find = new AppModel.Finder<Long, Playlist>(

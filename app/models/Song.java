@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.api.Play;
 
 import javax.persistence.*;
@@ -27,8 +28,11 @@ public class Song extends AppModel{
 
     public String url;
 
+    public String sourceUrl;
+
     public String source;
 
-    //@ManyToMany(mappedBy = "songs")
-    //public List<Playlist> playlists;
+    @ManyToMany(mappedBy = "songs")
+    @JsonBackReference
+    public List<Playlist> playlists;
 }

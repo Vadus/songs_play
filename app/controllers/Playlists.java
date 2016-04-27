@@ -89,6 +89,7 @@ public class Playlists extends Controller{
             return badRequest("URL '" + url + "' can not be read");
         }
 
+        String sourceUrl = url;
         if(url.startsWith("https://www.youtube.com")){
             String videoId = null;
             int vPar = url.indexOf("v=");
@@ -104,12 +105,16 @@ public class Playlists extends Controller{
             }
         }
 
+        Playlist playlist = Playlist.find.byId(Long.parseLong(playlistId));
+
         Song song = new Song();
+        song.pos = playlist.songs.size() + 1;
         song.url = url;
+        song.sourceUrl = sourceUrl;
         song.source = source;
         song.title = title;
+        song.save();
 
-        Playlist playlist = Playlist.find.byId(Long.parseLong(playlistId));
         playlist.songs.add(song);
         playlist.update();
 

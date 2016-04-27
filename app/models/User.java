@@ -5,6 +5,7 @@ import be.objectify.deadbolt.java.models.Role;
 import be.objectify.deadbolt.java.models.Subject;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
@@ -63,6 +64,7 @@ public class User extends AppModel implements Subject {
 	public List<UserPermission> permissions;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
 	public List<Playlist> playlists;
 
 	public static final AppModel.Finder<Long, User> find = new AppModel.Finder<Long, User>(

@@ -37,22 +37,24 @@ public class Global extends GlobalSettings {
             song1.pos = 1;
             song1.title = "Moderat - New Error";
             song1.url = "https://www.youtube.com/v/1J9l3O1jmrg";
+            song1.sourceUrl = "https://www.youtube.com/watch?v=1J9l3O1jmrg";
             song1.source = "YT";
-            //song1.save();
+            song1.save();
 
             Song song2 = new Song();
             song2.pos = 2;
             song2.title = "My Tribute Mixtape Series #13: Christian Löffler";
             song2.url = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
+            song2.sourceUrl = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
             song2.source = "SC";
-            //song2.save();
+            song2.save();
 
             Playlist playlist = new Playlist();
             playlist.name = "Dannys Songs";
             playlist.songs.add(song1);
             playlist.songs.add(song2);
-            //playlist.user = u;
-            //playlist.save();
+            playlist.user = u;
+            playlist.save();
 
             u.playlists.add(playlist);
             u.update();

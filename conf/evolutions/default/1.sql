@@ -14,11 +14,17 @@ create sequence linked_account_seq;
 
 create table playlists (
   id                            bigint not null,
-  user_id                       bigint not null,
   name                          varchar(255),
+  user_id                       bigint,
   constraint pk_playlists primary key (id)
 );
 create sequence playlists_seq;
+
+create table playlist_songs (
+  playlist_id                   bigint not null,
+  song_id                       bigint not null,
+  constraint pk_playlist_songs primary key (playlist_id,song_id)
+);
 
 create table security_role (
   id                            bigint not null,
@@ -29,10 +35,10 @@ create sequence security_role_seq;
 
 create table songs (
   id                            bigint not null,
-  playlist_id                   bigint not null,
   pos                           integer,
   title                         varchar(255),
   url                           varchar(255),
+  source_url                    varchar(255),
   source                        varchar(255),
   constraint pk_songs primary key (id)
 );
@@ -89,8 +95,11 @@ create index ix_linked_account_user_id on linked_account (user_id);
 alter table playlists add constraint fk_playlists_user_id foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_playlists_user_id on playlists (user_id);
 
-alter table songs add constraint fk_songs_playlist_id foreign key (playlist_id) references playlists (id) on delete restrict on update restrict;
-create index ix_songs_playlist_id on songs (playlist_id);
+alter table playlist_songs add constraint fk_playlist_songs_playlists foreign key (playlist_id) references playlists (id) on delete restrict on update restrict;
+create index ix_playlist_songs_playlists on playlist_songs (playlist_id);
+
+alter table playlist_songs add constraint fk_playlist_songs_songs foreign key (song_id) references songs (id) on delete restrict on update restrict;
+create index ix_playlist_songs_songs on playlist_songs (song_id);
 
 alter table token_action add constraint fk_token_action_target_user_id foreign key (target_user_id) references users (id) on delete restrict on update restrict;
 create index ix_token_action_target_user_id on token_action (target_user_id);
@@ -116,8 +125,11 @@ drop index if exists ix_linked_account_user_id;
 alter table playlists drop constraint if exists fk_playlists_user_id;
 drop index if exists ix_playlists_user_id;
 
-alter table songs drop constraint if exists fk_songs_playlist_id;
-drop index if exists ix_songs_playlist_id;
+alter table playlist_songs drop constraint if exists fk_playlist_songs_playlists;
+drop index if exists ix_playlist_songs_playlists;
+
+alter table playlist_songs drop constraint if exists fk_playlist_songs_songs;
+drop index if exists ix_playlist_songs_songs;
 
 alter table token_action drop constraint if exists fk_token_action_target_user_id;
 drop index if exists ix_token_action_target_user_id;
@@ -139,6 +151,8 @@ drop sequence if exists linked_account_seq;
 
 drop table if exists playlists;
 drop sequence if exists playlists_seq;
+
+drop table if exists playlist_songs;
 
 drop table if exists security_role;
 drop sequence if exists security_role_seq;

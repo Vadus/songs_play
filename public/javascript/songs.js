@@ -1,3 +1,5 @@
+var STATIC_RES = "assets/";
+
 var Player = function(songlist){
     this.songlist = songlist;
     
@@ -71,10 +73,10 @@ Player.prototype.playNextSong = function(){
             }
         }
         if(nextSong != undefined && nextSong != null){
-            this.playVideo(nextSong.pos, nextSong.url, nextSong.source);
+            this.playVideo(nextSong.id, nextSong.url, nextSong.source);
         }
         else{
-            this.playVideo(firstSong.pos, firstSong.url, firstSong.source);
+            this.playVideo(firstSong.id, firstSong.url, firstSong.source);
         }
     }
 };
@@ -133,7 +135,8 @@ Player.prototype.initSoundcloud = function(playerId, iframeId){
         console.log('SC finished');
         _onPlayerHasFinished("SC");
     });
-    
+
+    /*
     var scButtonsStart = document.querySelectorAll('.scButtonStart');
     console.log("found " + scButtonsStart.length + " song elements");
     for( var i in scButtonsStart) {
@@ -158,6 +161,7 @@ Player.prototype.initSoundcloud = function(playerId, iframeId){
         stopVideo(songId, "SC");
       };
     }
+    */
 };
 
 Player.prototype._playVideoYt = function(videoUrl){
@@ -192,7 +196,7 @@ function initSonglist(songlist){
 
         songlistUl.appendChild(songLi);
     }
-}
+};
 
 function addSong(song){
 
@@ -201,7 +205,7 @@ function addSong(song){
     var songlistUl = document.getElementById("songlist").getElementsByTagName("ul")[0];
     var songLi = createSongLi(song);
     songlistUl.appendChild(songLi);
-}
+};
 
 function createSongLi(song){
     var songLi = document.createElement("li");
@@ -213,33 +217,35 @@ function createSongLi(song){
     if(song.source == "YT"){
       imgStart.setAttribute("id", "ytButtonStart_" + song.id);
       imgStart.setAttribute("class", "ytButtonStart");
-      imgStart.setAttribute("src", "http://songs.klarblick.org/static/yt_play.svg");
+      imgStart.setAttribute("src", STATIC_RES + "icons/yt_play.svg");
     }
     else if(song.source == "SC"){
       imgStart.setAttribute("id", "scButtonStart_" + song.id);
       imgStart.setAttribute("class", "scButtonStart");
-      imgStart.setAttribute("src", "http://songs.klarblick.org/static/sc_play.svg");
+      imgStart.setAttribute("src", STATIC_RES + "icons/sc_play.svg");
     }
     imgStart.setAttribute("alt", song.url);
     imgStart.setAttribute("style", "width: 20px; height: 20px;");
+    imgStart.setAttribute("onclick", "playVideo('"+song.id+"', '"+song.url+"', '"+song.source+"')");
 
     var imgStop = document.createElement("img");
     if(song.source == "YT"){
       imgStop.setAttribute("id", "ytButtonStop_" + song.id);
       imgStop.setAttribute("class", "ytButtonStop");
-      imgStop.setAttribute("src", "http://songs.klarblick.org/static/yt_pause.svg");
+      imgStop.setAttribute("src", STATIC_RES + "icons/yt_pause.svg");
     }
     else if(song.source == "SC"){
       imgStop.setAttribute("id", "scButtonStop_" + song.id);
       imgStop.setAttribute("class", "scButtonStop");
-      imgStop.setAttribute("src", "http://songs.klarblick.org/static/sc_pause.svg");
+      imgStop.setAttribute("src", STATIC_RES + "icons/sc_pause.svg");
     }
     imgStop.setAttribute("alt", song.url);
     imgStop.setAttribute("style", "width: 20px; height: 20px; display: none;");
+    imgStop.setAttribute("onclick", "stopVideo('"+song.id+"', '"+song.source+"')");
 
     var brTag = document.createElement("br");
     var songLink = document.createElement("a");
-    songLink.setAttribute("href", song.url);
+    songLink.setAttribute("href", song.sourceUrl);
     songLink.setAttribute("target", "_blank");
     songLink.innerHTML = "Source";
     /*
@@ -258,7 +264,7 @@ function createSongLi(song){
     songLi.appendChild(songDiv);
 
     return songLi;
-}
+};
 
 function playVideo(songId, videoUrl, videoSource){
     _player.playVideo(songId, videoUrl, videoSource)
@@ -281,9 +287,8 @@ function initPlayer(songlist){
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    
-    
-}
+
+};
 
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
@@ -295,13 +300,13 @@ function onYouTubeIframeAPIReady() {
 };
 
 function onYtPlayerReady(){
+
+    /*
     var ytButtonsStart = document.querySelectorAll('.ytButtonStart');
-    //console.log("found " + ytButtonsStart.length + " song elements");
     for(var i in ytButtonsStart) {
       var ytButtonStart = ytButtonsStart[i];
       var songUrl = ytButtonStart.alt;
       if(songUrl != undefined){
-        //console.log("Setting click for play button with url " + songUrl);
         ytButtonStart.onclick = function(e){
           var songId = e.target.id.substring("ytButtonStart_".length);
           var videoUrl = e.target.alt;
@@ -310,8 +315,8 @@ function onYtPlayerReady(){
         }
       }
     };
+
     var ytButtonsStop = document.querySelectorAll(".ytButtonStop");
-    //console.log("found " + ytButtonsStop.length + " song elements");
     for(var i in ytButtonsStop) {
       var ytButtonStop = ytButtonsStop[i];
       ytButtonStop.onclick = function(e){
@@ -320,6 +325,7 @@ function onYtPlayerReady(){
         stopVideo(songId, "YT");
       }
     };
+    */
 };
 
 function onYtPlayerStateChange(e){
@@ -335,4 +341,4 @@ function _onPlayerHasFinished(source){
         _player.stopVideo(_player.currentSong.id, source)
         _player.playNextSong();
     }
-}
+};
