@@ -16,6 +16,7 @@ create table playlists (
   id                            bigint not null,
   name                          varchar(255),
   user_id                       bigint,
+  created                       timestamp,
   constraint pk_playlists primary key (id)
 );
 create sequence playlists_seq;

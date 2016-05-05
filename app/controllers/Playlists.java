@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Playlist;
 import models.Song;
@@ -45,6 +47,12 @@ public class Playlists extends Controller{
         return notFound(Json.parse("{\"error\": \"Not Found\"}"));
     }
 
+    public Result recent(Integer count){
+        List<Playlist> lists = Playlist.find.orderBy("created desc").setMaxRows(count).findList();
+        return ok(Json.toJson(lists));
+    }
+
+    @Restrict(@Group(Application.USER_ROLE))
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
         JsonNode json = request().body().asJson();
@@ -60,7 +68,8 @@ public class Playlists extends Controller{
         Logger.info("Adding song " + url + " to playlist " + playlistId);
 
         String source = null;
-        if(url.indexOf("youtube.com") != -1){
+        if(url.indexOf("youtube.com") != -1
+        || url.indexOf("youtu.be") != -1){
             source = "YT";
         }
         else if (url.indexOf("soundcloud.com") != -1){
@@ -90,7 +99,7 @@ public class Playlists extends Controller{
         }
 
         String sourceUrl = url;
-        if(url.startsWith("https://www.youtube.com")){
+        if(source.equals("YT")){
             String videoId = null;
             int vPar = url.indexOf("v=");
             if(vPar > -1){
@@ -98,6 +107,13 @@ public class Playlists extends Controller{
                 int nextPar = videoId.indexOf("&");
                 if(nextPar > -1){
                     videoId = videoId.substring(0, nextPar);
+                }
+            }
+            else if (url.indexOf("youtu.be") != -1){
+                int domainPos = url.indexOf("youtu.be");
+                String[] parts = url.substring(domainPos).split("/");
+                if(parts.length > 1){
+                    videoId = parts[1];
                 }
             }
             if(videoId != null){

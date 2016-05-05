@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +37,8 @@ public class Playlist extends AppModel {
     )
     @JsonManagedReference
     public List<Song> songs;
+
+    public Date created;
 
     public static final AppModel.Finder<Long, Playlist> find = new AppModel.Finder<Long, Playlist>(
             Long.class, Playlist.class);

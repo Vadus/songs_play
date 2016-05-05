@@ -6,98 +6,122 @@
 
 @main(userProvider, Messages("songs.index.title")) {
 
-        @subjectPresentOr() {
-            @defining(userProvider.getUser(session())) { user =>
-                <div id="songlist-head"></div>
+    <div id="songlist-head"></div>
 
-                <div id="songform-and-player" style="float: right; width: 300px">
-                    <div>
-                        <form id="songform" action="lists/add" method="post">
-                            <select id="playlist-selection" name="playlist">
-                            </select><br/>
-                            <input type="text" name="url" value="paste song url here" onclick="if(this.value == 'paste song url here') {this.value=''}" onblur="if(this.value == ''){this.value ='paste song url here'}"/>
-                            <button type="submit">OK</button>
-                        </form>
+    <div id="songform-and-player" style="float: right; width: 300px">
+        <div>
+            @subjectPresentOr() {
+                @defining(userProvider.getUser(session())) { user =>
 
-                        <script type="text/javascript">
-                             var form = document.getElementById("songform");
+                    <form id="songform" action="lists/add" method="post">
+                        <select id="playlist-selection" name="playlist">
+                        </select><br/>
+                        <input type="text" name="url" value="paste song url here" onclick="if(this.value == 'paste song url here') {this.value=''}" onblur="if(this.value == ''){this.value ='paste song url here'}"/>
+                        <button type="submit">OK</button>
+                    </form>
 
-                            form.onsubmit = function (e) {
-                              // stop the regular form submission
-                              e.preventDefault();
+                    <script type="text/javascript">
+                         var form = document.getElementById("songform");
 
-                              // collect the form data while iterating over the inputs
-                              var data = {};
-                              for (var i = 0, ii = form.length; i < ii; ++i) {
-                                var input = form[i];
-                                data[input.name] = input.value;
-                              }
+                        form.onsubmit = function (e) {
+                          // stop the regular form submission
+                          e.preventDefault();
 
-                              // construct an HTTP request
-                              var xhr = new XMLHttpRequest();
-                              xhr.open(form.method, form.action, true);
-                              xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                          // collect the form data while iterating over the inputs
+                          var data = {};
+                          for (var i = 0, ii = form.length; i < ii; ++i) {
+                            var input = form[i];
+                            data[input.name] = input.value;
+                          }
 
-                              // send the collected data as JSON
-                              xhr.send(JSON.stringify(data));
+                          // construct an HTTP request
+                          var xhr = new XMLHttpRequest();
+                          xhr.open(form.method, form.action, true);
+                          xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-                              xhr.onloadend = function (e) {
-                                var status = e.target.status;
-                                if(status == 200){
-                                    var song = JSON.parse(e.target.response);
-                                    console.log("Added song " + song);
+                          // send the collected data as JSON
+                          xhr.send(JSON.stringify(data));
 
-                                    addSong(song);
-                                }
-                                else{
-                                    alert(e.target.status + " " + e.target.statusText + ": " + e.target.response);
-                                }
-                                form[1].value = "paste song url here";
-                              };
-                            };
-                           </script>
+                          xhr.onloadend = function (e) {
+                            var status = e.target.status;
+                            if(status == 200){
+                                var song = JSON.parse(e.target.response);
+                                console.log("Added song " + song);
 
-                        <div id="player-frame">
-
-                            <!-- 1. The <iframe> (and video yt_player) will replace this <div> tag. -->
-                            <div id="yt_player" class="player" style="display: none;"></div>
-                            <div id="sc_player" class="player" style="display: none;">
-                                <iframe id="sc-widget" scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/231715226" frameborder="no"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="songlist" style="float: left; max-width: 500px;">
-                    <ul>
-
-                    </ul>
-                </div>
-                <div style="clear: both;"></div>
-
-                <script type="text/javascript">
-
-                    var songs = [];
-
-                    $.getJSON( "lists/@user.name", function( data ) {
-                      var playlistName = data[0].name;
-                      songs = data[0].songs;
-                      console.log("songslist '"+playlistName+"' from lists/@user.name: " + songs);
-
-                      document.getElementById("songlist-head").innerHTML = "<h2>" + playlistName + "</h2>";
-                      initPlayer(songs);
-
-                      $.each( data, function( index, playlist ) {
-                        var option = document.createElement("option");
-                        option.value = playlist.id;
-                        option.innerHTML = playlist.name;
-
-                        document.getElementById("playlist-selection").appendChild(option);
-                      });
-                    });
-                </script>
+                                addSong(song);
+                            }
+                            else{
+                                alert(e.target.status + " " + e.target.statusText + ": " + e.target.response);
+                            }
+                            form[1].value = "paste song url here";
+                          };
+                        };
+                       </script>
+                }
+            } {
             }
-        } {
-            not logged in
+            <div id="player-frame">
+                <!-- 1. The <iframe> (and video yt_player) will replace this <div> tag. -->
+                <div id="yt_player" class="player" style="display: none;"></div>
+                <div id="sc_player" class="player" style="display: none;">
+                    <iframe id="sc-widget" scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/231715226" frameborder="no"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="songlist" style="float: left; max-width: 500px;">
+        <ul>
+
+        </ul>
+    </div>
+<div style="clear: both;"></div>
+    @subjectPresentOr() {
+        @defining(userProvider.getUser(session())) { user =>
+            <script type="text/javascript">
+
+                var songs = [];
+
+                $.getJSON( "lists/@user.name", function( data ) {
+                  var playlistName = data[0].name;
+                  songs = data[0].songs;
+                  console.log("songslist '"+playlistName+"' from lists/@user.name: " + songs);
+
+                  document.getElementById("songlist-head").innerHTML = "<h3>Playlists of @user.name</h3>"
+                   + "<h2>" + playlistName + "</h2>";
+
+                  initPlayer(songs);
+
+                  $.each( data, function( index, playlist ) {
+                    var option = document.createElement("option");
+                    option.value = playlist.id;
+                    option.innerHTML = playlist.name;
+
+                    document.getElementById("playlist-selection").appendChild(option);
+                  });
+                });
+            </script>
         }
+    } {
+        <script type="text/javascript">
+            var songs = [];
+
+            $.getJSON( "lists/recent/10", function( data ) {
+              var playlistName = data[0].name;
+              songs = data[0].songs;
+              console.log("songslist '"+playlistName+"' from lists/recent/1: " + songs);
+
+              document.getElementById("songlist-head").innerHTML ="<h3>Playlists recently added</h3>"
+              + "<h2>" + playlistName + "</h2>";
+              initPlayer(songs);
+
+              $.each( data, function( index, playlist ) {
+                var option = document.createElement("option");
+                option.value = playlist.id;
+                option.innerHTML = playlist.name;
+
+                document.getElementById("playlist-selection").appendChild(option);
+              });
+            });
+        </script>
     }
+}

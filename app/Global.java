@@ -8,6 +8,7 @@ import play.Application;
 import play.GlobalSettings;
 
 import javax.inject.Inject;
+import java.util.Date;
 
 /**
  * Created by DTramnitzke on 10.04.2016.
@@ -54,6 +55,7 @@ public class Global extends GlobalSettings {
             playlist.songs.add(song1);
             playlist.songs.add(song2);
             playlist.user = u;
+            playlist.created = new Date();
             playlist.save();
 
             u.playlists.add(playlist);
