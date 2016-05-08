@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import play.api.Play;
 
 import javax.persistence.*;
@@ -35,4 +36,13 @@ public class Song extends AppModel{
     @ManyToMany(mappedBy = "songs")
     @JsonBackReference
     public List<Playlist> playlists;
+
+    @ManyToMany
+    @JoinTable(
+            name="song_tags",
+            joinColumns = @JoinColumn(name="SONG_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
+    )
+    @JsonManagedReference
+    public List<Tag> tags;
 }

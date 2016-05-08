@@ -38,6 +38,15 @@ public class Playlist extends AppModel {
     @JsonManagedReference
     public List<Song> songs;
 
+    @ManyToMany
+    @JoinTable(
+            name="playlist_tags",
+            joinColumns = @JoinColumn(name="PLAYLIST_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
+    )
+    @JsonManagedReference
+    public List<Tag> tags;
+
     public Date created;
 
     public static final AppModel.Finder<Long, Playlist> find = new AppModel.Finder<Long, Playlist>(

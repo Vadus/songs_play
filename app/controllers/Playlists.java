@@ -120,6 +120,15 @@ public class Playlists extends Controller{
                 url = "https://www.youtube.com/v/" + videoId;
             }
         }
+        else if(source.equals("SC")){
+            int mPos = url.indexOf("m.soundcloud.");
+            //Logger.info("mPos in "+url+" = " + mPos);
+            if( mPos > -1){
+                String urlTail = url.substring(mPos + url.substring(mPos).indexOf("/"));
+                //Logger.info("urlTail = " + urlTail);
+                url = "https://soundcloud.com" + urlTail;
+            }
+        }
 
         Playlist playlist = Playlist.find.byId(Long.parseLong(playlistId));
 

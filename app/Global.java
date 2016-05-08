@@ -19,9 +19,6 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         Logger.info("Application has started");
 
-
-
-
         UsernamePasswordAuthUser user =
                 new UsernamePasswordAuthUser("admin", "admin@klarblick.org") {
         };
@@ -34,31 +31,58 @@ public class Global extends GlobalSettings {
 
             Logger.info("user 'admin@klarblick.org' created");
 
+            Tag tagElectronic = new Tag();
+            tagElectronic.name = "electronic";
+            tagElectronic.save();
+
+            Tag tagRemix = new Tag();
+            tagRemix.name = "remix";
+            tagRemix.save();
+
+            Tag tagDark = new Tag();
+            tagDark.name = "dark";
+            tagDark.save();
+
             Song song1 = new Song();
             song1.pos = 1;
-            song1.title = "Moderat - New Error";
-            song1.url = "https://www.youtube.com/v/1J9l3O1jmrg";
-            song1.sourceUrl = "https://www.youtube.com/watch?v=1J9l3O1jmrg";
+            song1.title = "Keaton Henson - Elevator Song";
+            song1.url = "https://www.youtube.com/v/YZ72sspbN3U";
+            song1.sourceUrl = "https://www.youtube.com/watch?v=YZ72sspbN3U";
             song1.source = "YT";
+            song1.tags.add(tagElectronic);
+            song1.tags.add(tagDark);
             song1.save();
 
             Song song2 = new Song();
             song2.pos = 2;
-            song2.title = "My Tribute Mixtape Series #13: Christian Löffler";
-            song2.url = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
-            song2.sourceUrl = "https://soundcloud.com/dekunstenaar/presents-christian-loffler";
+            song2.title = "The xx - VCR (Four Tet remix)";
+            song2.url = "https://soundcloud.com/four-tet/the-xx-vcr-four-tet-remix";
+            song2.sourceUrl = "https://soundcloud.com/four-tet/the-xx-vcr-four-tet-remix";
             song2.source = "SC";
+            song2.tags.add(tagRemix);
             song2.save();
+
+            Song song3 = new Song();
+            song3.pos = 3;
+            song3.title = "Rhye - \"The Fall\" (Official Music Video)";
+            song3.url = "https://www.youtube.com/v/F6yfFWvoygY";
+            song3.sourceUrl = "https://www.youtube.com/watch?v=F6yfFWvoygY";
+            song3.source = "YT";
+            song3.tags.add(tagElectronic);
+            song3.save();
 
             Playlist playlist = new Playlist();
             playlist.name = "Dannys Songs";
             playlist.songs.add(song1);
             playlist.songs.add(song2);
+            playlist.songs.add(song3);
             playlist.user = u;
             playlist.created = new Date();
+            playlist.tags.add(tagElectronic);
             playlist.save();
 
             u.playlists.add(playlist);
+
             u.update();
 
         }

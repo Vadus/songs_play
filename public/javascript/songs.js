@@ -211,6 +211,9 @@ function createSongLi(song){
     var songLi = document.createElement("li");
     var songDiv = document.createElement("div");
     songDiv.setAttribute("id", song.id);
+    var songDivTop = document.createElement("div");
+    var songDivBottom = document.createElement("div");
+
     var songSpan = document.createElement("span");
     songSpan.innerHTML = song.title;
     var imgStart = document.createElement("img");
@@ -243,7 +246,9 @@ function createSongLi(song){
     imgStop.setAttribute("style", "width: 20px; height: 20px; display: none;");
     imgStop.setAttribute("onclick", "stopVideo('"+song.id+"', '"+song.source+"')");
 
-    var brTag = document.createElement("br");
+    var songLinkDiv = document.createElement("div");
+    songLinkDiv.style.float = "left";
+    songLinkDiv.style.paddingRight = "5px";
     var songLink = document.createElement("a");
     songLink.setAttribute("href", song.sourceUrl);
     songLink.setAttribute("target", "_blank");
@@ -255,11 +260,30 @@ function createSongLi(song){
     <br/><a href="https://www.youtube.com/watch?v=KuAXv5qaSbQ" target="_blank" >Source</a>
     */
 
-    songDiv.appendChild(imgStart);
-    songDiv.appendChild(imgStop);
-    songDiv.appendChild(songSpan);
-    songDiv.appendChild(brTag);
-    songDiv.appendChild(songLink);
+    songLinkDiv.appendChild(songLink);
+
+    songDivTop.appendChild(imgStart);
+    songDivTop.appendChild(imgStop);
+    songDivTop.appendChild(songSpan);
+
+    songDivBottom.appendChild(songLinkDiv);
+
+    var tagDiv = document.createElement("div");
+    tagDiv.setAttribute("class", "tagDiv");
+
+    for(var t in song.tags){
+        var tag = song.tags[t];
+        var tagLink = document.createElement("a");
+        tagLink.setAttribute("href", "?tag=" + tag.name);
+        tagLink.innerHTML = tag.name;
+        tagLink.style.paddingRight = "5px";
+
+        tagDiv.appendChild(tagLink);
+    }
+    songDivBottom.appendChild(tagDiv);
+
+    songDiv.appendChild(songDivTop);
+    songDiv.appendChild(songDivBottom);
 
     songLi.appendChild(songDiv);
 

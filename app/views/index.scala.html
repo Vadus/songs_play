@@ -81,13 +81,29 @@
 
                 var songs = [];
 
-                $.getJSON( "lists/@user.name", function( data ) {
+                $.getJSON( "lists?username=@user.name", function( data ) {
                   var playlistName = data[0].name;
                   songs = data[0].songs;
-                  console.log("songslist '"+playlistName+"' from lists/@user.name: " + songs);
+                  console.log("songslist '"+playlistName+"' from lists?username=@user.name: " + songs);
 
-                  document.getElementById("songlist-head").innerHTML = "<h3>Playlists of @user.name</h3>"
-                   + "<h2>" + playlistName + "</h2>";
+                  var playlistDiv1 = document.createElement("h3");
+                  playlistDiv1.innerHTML = "Playlists of @user.name";
+                  var playlistDiv2 = document.createElement("h2");
+                  playlistDiv2.innerHTML = playlistName;
+                  var tagDiv = document.createElement("div");
+                  tagDiv.setAttribute("class", "tagDiv");
+                  for(var t in data[0].tags){
+                    var tag = data[0].tags[t];
+                    var tagLink = document.createElement("a");
+                    tagLink.setAttribute("href", "?tag=" + tag.name);
+                    tagLink.innerHTML = tag.name;
+
+                    tagDiv.appendChild(tagLink);
+                  }
+
+                  document.getElementById("songlist-head").appendChild(playlistDiv1);
+                  document.getElementById("songlist-head").appendChild(playlistDiv2);
+                  document.getElementById("songlist-head").appendChild(tagDiv);
 
                   initPlayer(songs);
 
@@ -110,17 +126,26 @@
               songs = data[0].songs;
               console.log("songslist '"+playlistName+"' from lists/recent/1: " + songs);
 
-              document.getElementById("songlist-head").innerHTML ="<h3>Playlists recently added</h3>"
-              + "<h2>" + playlistName + "</h2>";
+              var playlistDiv1 = document.createElement("h3");
+              playlistDiv1.innerHTML = "Playlists recently added";
+              var playlistDiv2 = document.createElement("h2");
+              playlistDiv2.innerHTML = playlistName;
+              var tagDiv = document.createElement("div");
+              tagDiv.setAttribute("class", "tagDiv");
+              for(var t in data[0].tags){
+                var tag = data[0].tags[t];
+                var tagLink = document.createElement("a");
+                tagLink.setAttribute("href", "?tag=" + tag.name);
+                tagLink.innerHTML = tag.name;
+
+                tagDiv.appendChild(tagLink);
+              }
+
+              document.getElementById("songlist-head").appendChild(playlistDiv1);
+              document.getElementById("songlist-head").appendChild(playlistDiv2);
+              document.getElementById("songlist-head").appendChild(tagDiv);
+
               initPlayer(songs);
-
-              $.each( data, function( index, playlist ) {
-                var option = document.createElement("option");
-                option.value = playlist.id;
-                option.innerHTML = playlist.name;
-
-                document.getElementById("playlist-selection").appendChild(option);
-              });
             });
         </script>
     }

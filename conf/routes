@@ -47,10 +47,10 @@ POST    /login/password/forgot     controllers.Signup.doForgotPassword
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /lists                      controllers.Playlists.myList
-
-GET     /lists/:username            controllers.Playlists.list(username: String)
+GET     /lists                      controllers.Playlists.list(username: String)
 
 GET     /lists/recent/:count        controllers.Playlists.recent(count: Integer)
 
 POST    /lists/add                  controllers.Playlists.add
+
+GET     /songs                      controllers.Songs.list(username: String)
