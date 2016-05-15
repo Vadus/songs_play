@@ -54,3 +54,9 @@ GET     /lists/recent/:count        controllers.Playlists.recent(count: Integer)
 POST    /lists/add                  controllers.Playlists.add
 
 GET     /songs                      controllers.Songs.list(username: String)
+
+GET     /users/list                 controllers.Users.list
+
+POST    /users/:id/remove           controllers.Users.remove(id: Long)
+
+POST    /users/:id/activate         controllers.Users.activate(id: Long)

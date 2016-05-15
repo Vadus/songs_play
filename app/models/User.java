@@ -5,6 +5,7 @@ import be.objectify.deadbolt.java.models.Role;
 import be.objectify.deadbolt.java.models.Subject;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.AuthUser;
@@ -35,6 +36,7 @@ public class User extends AppModel implements Subject {
 	@Id
 	public Long id;
 
+	@JsonIgnore
 	@Constraints.Email
 	// if you make this unique, keep in mind that users *must* merge/link their
 	// accounts then on signup with additional providers
@@ -43,8 +45,10 @@ public class User extends AppModel implements Subject {
 
 	public String name;
 
+	@JsonIgnore
 	public String firstName;
 
+	@JsonIgnore
 	public String lastName;
 
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -54,12 +58,15 @@ public class User extends AppModel implements Subject {
 
 	public boolean emailValidated;
 
+	@JsonIgnore
 	@ManyToMany
 	public List<SecurityRole> roles;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<LinkedAccount> linkedAccounts;
 
+	@JsonIgnore
 	@ManyToMany
 	public List<UserPermission> permissions;
 
@@ -70,6 +77,7 @@ public class User extends AppModel implements Subject {
 	public static final AppModel.Finder<Long, User> find = new AppModel.Finder<Long, User>(
 			Long.class, User.class);
 
+    @JsonIgnore
 	@Override
 	public String getIdentifier()
 	{
@@ -201,6 +209,7 @@ public class User extends AppModel implements Subject {
 				User.findByAuthUserIdentity(newUser));
 	}
 
+	@JsonIgnore
 	public Set<String> getProviders() {
 		final Set<String> providerKeys = new HashSet<String>(
 				this.linkedAccounts.size());

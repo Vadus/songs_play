@@ -108,7 +108,7 @@ public class MyUsernamePasswordAuthProvider
 		public String validate() {
 			if (password == null || !password.equals(repeatPassword)) {
 				return Messages
-						.get("playauthenticate.password.signup.error.passwords_not_same");
+						.get("songs.password.signup.error.passwords_not_same");
 			}
 			return null;
 		}
@@ -235,14 +235,14 @@ public class MyUsernamePasswordAuthProvider
 	@Override
 	protected String getVerifyEmailMailingSubject(
 			final MyUsernamePasswordAuthUser user, final Context ctx) {
-		return Messages.get("playauthenticate.password.verify_signup.subject");
+		return Messages.get("songs.password.verify_signup.subject");
 	}
 
 	@Override
 	protected String onLoginUserNotFound(final Context context) {
 		context.flash()
 				.put(controllers.Application.FLASH_ERROR_KEY,
-						Messages.get("playauthenticate.password.login.unknown_user_or_pw"));
+						Messages.get("songs.password.login.unknown_user_or_pw"));
 		return super.onLoginUserNotFound(context);
 	}
 
@@ -293,7 +293,7 @@ public class MyUsernamePasswordAuthProvider
 
 	protected String getPasswordResetMailingSubject(final User user,
 			final Context ctx) {
-		return Messages.get("playauthenticate.password.reset_email.subject");
+		return Messages.get("songs.password.reset_email.subject");
 	}
 
 	protected Body getPasswordResetMailingBody(final String token,
@@ -331,7 +331,7 @@ public class MyUsernamePasswordAuthProvider
 
 	protected String getVerifyEmailMailingSubjectAfterSignup(final User user,
 			final Context ctx) {
-		return Messages.get("playauthenticate.password.verify_email.subject");
+		return Messages.get("songs.password.verify_email.subject");
 	}
 
 	protected String getEmailTemplate(final String template,

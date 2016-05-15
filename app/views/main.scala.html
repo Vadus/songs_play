@@ -46,7 +46,11 @@
                         <li class="@("active".when(nav == "admin"))"><a href="@routes.Application.admin()">@Messages("songs.navigation.admin")</a></li>
                         <li class="@("active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("songs.navigation.restricted")</a></li>
                         -->
-                        @subjectNotPresent() {
+                        @subjectPresentOr(){
+                            @restrict(roles = anyOf(allOf("admin"))) {
+                                <li class="@("active".when(nav == "admin"))"><a href="@routes.Application.admin()">@Messages("songs.navigation.admin")</a></li>
+                            }
+                        } {
                             <li class="@("active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("songs.navigation.signup")</a></li>
                         }
                     </ul>

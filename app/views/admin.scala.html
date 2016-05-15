@@ -7,4 +7,108 @@
     <p>
         @Messages("songs.admin.header")
     </p>
+
+    <table id="tbl_users" border="1"></table>
+
+    <script type="text/javascript">
+        function loadUsers(){
+            $.getJSON("/users/list" , function(data) {
+                var tbl_head = document.createElement("thead");
+                var tbl_body = document.createElement("tbody");
+                var odd_even = false;
+                var r = 0;
+                $.each(data, function() {
+                    if(r == 0){
+                        var tbl_head_row = tbl_head.insertRow();
+                    }
+                    var id = 0;
+                    var emailValidated = false;
+                    var tbl_row = tbl_body.insertRow();
+                    tbl_row.className = odd_even ? "odd" : "even";
+                    $.each(this, function(k , v) {
+                        if(r == 0){
+                            var head_cell = tbl_head_row.insertCell();
+                            head_cell.appendChild(document.createTextNode(k.toString()));
+                        }
+                        if(k == 'id'){
+                            id = v;
+                        }
+                        if(k == 'emailValidated' && v == true){
+                            emailValidated = true;
+                        }
+                        var cell = tbl_row.insertCell();
+                        var value = v.toString();
+                        if(k == 'lastLogin'){
+                            value = new Date(v);
+                        }
+                        cell.appendChild(document.createTextNode(value));
+                    });
+                    odd_even = !odd_even;
+                    r++;
+
+                    var btn_cell_activate = tbl_row.insertCell();
+                    if(!emailValidated){
+                        var btn_activate = document.createElement("button");
+                        var txt_activate = document.createTextNode("activate");
+                        btn_activate.appendChild(txt_activate);
+                            btn_activate.onclick = function(){
+                            activateUser(id);
+                        };
+                        btn_cell_activate.appendChild(btn_activate);
+                    }
+
+                    var btn_cell = tbl_row.insertCell();
+                    var btn_remove = document.createElement("button");
+                    var txt_remove = document.createTextNode("remove");
+                    btn_remove.appendChild(txt_remove);
+                    btn_remove.onclick = function(){
+                        removeUser(id);
+                    };
+                    btn_cell.appendChild(btn_remove);
+                });
+                document.getElementById("tbl_users").appendChild(tbl_head);
+                document.getElementById("tbl_users").appendChild(tbl_body);
+            });
+        }
+
+        function removeUser(id){
+            console.log("removing user " + id);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/users/" + id + "/remove", true);
+            xhr.onreadystatechange = function(e) {
+                var status = e.target.status;
+                if(status == 200){
+                    console.log("removed user " + id);
+
+                    location.reload();
+                }
+                else{
+                    alert(e.target.status + " " + e.target.statusText + ": " + e.target.response);
+                }
+            };
+            xhr.send();
+        }
+
+        function activateUser(id){
+            console.log("activating user " + id);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/users/" + id + "/activate", true);
+            xhr.onreadystatechange = function(e) {
+                var status = e.target.status;
+                if(status == 200){
+                    console.log("activated user " + id);
+
+                    location.reload();
+                }
+                else{
+                    alert(e.target.status + " " + e.target.statusText + ": " + e.target.response);
+                }
+            };
+            xhr.send();
+        }
+
+        loadUsers();
+    </script>
 }

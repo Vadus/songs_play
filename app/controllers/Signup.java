@@ -99,7 +99,7 @@ public class Signup extends Controller {
 			// be true - that's protecting our user privacy.
 			flash(Application.FLASH_MESSAGE_KEY,
 					this.msg.preferred(request()).at(
-							"playauthenticate.reset_password.message.instructions_sent",
+							"songs.reset_password.message.instructions_sent",
 							email));
 
 			final User user = User.findByEmail(email);
@@ -121,7 +121,7 @@ public class Signup extends Controller {
 					// up with a fake email via OAuth and get it verified by an
 					// a unsuspecting user that clicks the link.
 					flash(Application.FLASH_MESSAGE_KEY,
-							this.msg.preferred(request()).at("playauthenticate.reset_password.message.email_not_verified"));
+							this.msg.preferred(request()).at("songs.reset_password.message.email_not_verified"));
 
 					// You might want to re-send the verification email here...
 					provider.sendVerifyEmailMailingAfterSignup(user, ctx());
@@ -186,20 +186,20 @@ public class Signup extends Controller {
 						false);
 			} catch (final RuntimeException re) {
 				flash(Application.FLASH_MESSAGE_KEY,
-						this.msg.preferred(request()).at("playauthenticate.reset_password.message.no_password_account"));
+						this.msg.preferred(request()).at("songs.reset_password.message.no_password_account"));
 			}
 			final boolean login = this.userPaswAuthProvider.isLoginAfterPasswordReset();
 			if (login) {
 				// automatically log in
 				flash(Application.FLASH_MESSAGE_KEY,
-						this.msg.preferred(request()).at("playauthenticate.reset_password.message.success.auto_login"));
+						this.msg.preferred(request()).at("songs.reset_password.message.success.auto_login"));
 
 				return this.auth.loginAndRedirect(ctx(),
 						new MyLoginUsernamePasswordAuthUser(u.email));
 			} else {
 				// send the user to the login page
 				flash(Application.FLASH_MESSAGE_KEY,
-						this.msg.preferred(request()).at("playauthenticate.reset_password.message.success.manual_login"));
+						this.msg.preferred(request()).at("songs.reset_password.message.success.manual_login"));
 			}
 			return redirect(routes.Application.login());
 		}
@@ -224,7 +224,7 @@ public class Signup extends Controller {
 		final String email = ta.targetUser.email;
 		User.verify(ta.targetUser);
 		flash(Application.FLASH_MESSAGE_KEY,
-				this.msg.preferred(request()).at("playauthenticate.verify_email.success", email));
+				this.msg.preferred(request()).at("songs.verify_email.success", email));
 		if (this.userProvider.getUser(session()) != null) {
 			return redirect(routes.Application.index());
 		} else {

@@ -92,7 +92,7 @@ songs.link.account.ok=OK
 # songs: Signup folder translations
 
 songs.verify.email.title=Verify your e-mail
-songs.verify.email.requirement=Before you can use PlayAuthenticate, you first need to verify your e-mail address.
+songs.verify.email.requirement=Before you can use Songs!, you first need to verify your e-mail address.
 songs.verify.email.cta=An e-mail has been sent to the registered address. Please follow the embedded link to activate your account.
 
 songs.password.reset.title=Reset password
