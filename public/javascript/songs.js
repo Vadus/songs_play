@@ -280,6 +280,10 @@ function createSongLi(song){
 
         tagDiv.appendChild(tagLink);
     }
+    var clearDiv = document.createElement("div");
+    clearDiv.style.clear = "both";
+    tagDiv.appendChild(clearDiv);
+
     songDivBottom.appendChild(tagDiv);
 
     songDiv.appendChild(songDivTop);
